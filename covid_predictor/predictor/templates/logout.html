@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID Detection - Logout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #00bcd4;
+            --accent-color: #ff6b6b;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --info-color: #03a9f4;
+            --dark-color: #333;
+            --light-color: #f8f9fa;
+            --white: #ffffff;
+            --text-dark: #212529;
+            --text-light: #6c757d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .logout-container {
+            text-align: center;
+            max-width: 500px;
+            padding: 40px;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .logout-icon {
+            font-size: 60px;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .logout-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .logout-message {
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-container">
+        <div class="logout-icon">
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+        <h2 class="logout-title">You've been logged out</h2>
+        <p class="logout-message">Thank you for using COVID Detection Portal. Your session has been securely terminated.</p>
+        <div>
+            <a href="login.html" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Login Again
+            </a>
+            <a href="{% url 'home' %}" class="btn btn-outline">
+                <i class="fas fa-home"></i> Return Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // In a real app, you would also perform server-side logout here
+        // For example, via an API call before redirecting to this page
+        
+        // Clear any client-side storage
+        localStorage.clear();
+        sessionStorage.clear();
+        
+        // Clear cookies (simplified example)
+        document.cookie.split(";").forEach(function(c) {
+            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        });
+    </script>
+</body>
+</html>

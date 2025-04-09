@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID Detection - Results</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --success-color: #4caf50;
+            --accent-color: #ff6b6b;
+            --dark-color: #333;
+            --light-color: #f8f9fa;
+            --white: #ffffff;
+            --text-dark: #212529;
+            --text-light: #6c757d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .navbar {
+            background: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+
+        .nav-button {
+            background: var(--white);
+            color: var(--primary-color);
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-button:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .nav-button i {
+            margin-right: 5px;
+        }
+
+        .dashboard-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .predictions-list {
+            margin-top: 20px;
+        }
+
+        .prediction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: var(--light-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .prediction-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .prediction-info {
+            flex: 1;
+        }
+
+        .prediction-date {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .prediction-date i {
+            margin-right: 8px;
+        }
+
+        .prediction-result {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        .prediction-result.positive {
+            color: var(--accent-color);
+        }
+
+        .prediction-result.negative {
+            color: var(--success-color);
+        }
+
+        .prediction-result i {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+
+        .prediction-confidence {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .view-details-btn {
+            padding: 8px 15px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .view-details-btn:hover {
+            background: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .prediction-item {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+            }
+
+            .view-details-btn {
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .navbar-content {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .nav-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="logo">
+                    <i class="fas fa-shield-virus"></i>
+                    <span>COVID Detection</span>
+                </div>
+                <button class="nav-button" onclick="returnToHome()">
+                    <i class="fas fa-home"></i> Return to Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Your COVID-19 Test Results</h2>
+                <p>View your recent test predictions</p>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Recent Test Results</h3>
+                <div class="predictions-list" id="predictionsList">
+                    <!-- Prediction items will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Predictions array to store history
+        let predictions = [];
+
+        // Function to fetch prediction data from localStorage or server
+        function loadPredictionData() {
+            // For demo purposes, using localStorage
+            // In a real application, this would come from your server
+            const storedResult = localStorage.getItem('latestPredictionResult');
+            const storedSymptoms = localStorage.getItem('latestSymptoms');
+            
+            if (storedResult && storedSymptoms) {
+                const symptomsArray = JSON.parse(storedSymptoms);
+                addPrediction(storedResult, 92, symptomsArray);
+            } else {
+                // Default prediction if no data exists
+                addPrediction("positive", 92, ["Fever", "Dry Cough", "Fatigue"]);
+            }
+        }
+
+        // Function to add new prediction
+        function addPrediction(result, confidence, symptoms) {
+            const newPrediction = {
+                id: predictions.length + 1,
+                predictionTime: new Date().toLocaleString(),
+                result: result,
+                confidence: confidence,
+                symptoms: symptoms
+            };
+            predictions.unshift(newPrediction); // Add new prediction at the beginning
+            
+            // Store the latest prediction
+            localStorage.setItem('latestPredictionResult', result);
+            localStorage.setItem('latestSymptoms', JSON.stringify(symptoms));
+            
+            renderPredictions();
+        }
+
+        // Function to render predictions
+        function renderPredictions() {
+            const predictionsList = document.getElementById('predictionsList');
+            predictionsList.innerHTML = '';
+            
+            predictions.forEach(prediction => {
+                const predictionItem = document.createElement('div');
+                predictionItem.className = 'prediction-item';
+                
+                predictionItem.innerHTML = `
+                    <div class="prediction-info">
+                        <div class="prediction-date">
+                            <i class="far fa-calendar-alt"></i> ${prediction.predictionTime}
+                        </div>
+                        <div class="prediction-result ${prediction.result}">
+                            <i class="fas fa-${prediction.result === 'positive' ? 'exclamation-triangle' : 'check-circle'}"></i>
+                            ${prediction.result === 'positive' ? 'Positive' : 'Negative'}
+                        </div>
+                        <div class="prediction-confidence">
+                            Confidence: ${prediction.confidence}%
+                        </div>
+                    </div>
+                    <button class="view-details-btn" onclick="viewPredictionDetails(${prediction.id})">
+                        View Details
+                    </button>
+                `;
+                
+                predictionsList.appendChild(predictionItem);
+            });
+        }
+
+        // Function to view prediction details
+        function viewPredictionDetails(id) {
+            const prediction = predictions.find(p => p.id === id);
+            if (prediction) {
+                alert(`Test Details:\n\nPrediction Time: ${prediction.predictionTime}\nResult: ${prediction.result.charAt(0).toUpperCase() + prediction.result.slice(1)}\nConfidence: ${prediction.confidence}%\nSymptoms: ${prediction.symptoms.join(', ')}`);
+            }
+        }
+
+        // Function to return to home page
+        function returnToHome() {
+            window.location.href = '/';
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPredictionData();
+            renderPredictions();
+            
+            // Simulate fetching from server
+            fetch('/api/predictions/')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Prediction data:', data);
+                })
+                .catch(error => {
+                    console.error('Error fetching prediction data:', error);
+                });
+        });
+    </script>
+</body>
+</html>
